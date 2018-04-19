@@ -17,6 +17,7 @@
 		120695DD2061BC62008948B7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120695DC2061BC62008948B7 /* Player.swift */; };
 		120695DF2061C7CD008948B7 /* Projectile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120695DE2061C7CD008948B7 /* Projectile.swift */; };
 		122B025420892930004894CD /* EnemyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B025320892930004894CD /* EnemyFactory.swift */; };
+		122B025720893A7B004894CD /* DebugUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B025620893A7B004894CD /* DebugUI.swift */; };
 		12FFA3072064545A00BFD178 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FFA3062064545A00BFD178 /* Enemy.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		120695DC2061BC62008948B7 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		120695DE2061C7CD008948B7 /* Projectile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projectile.swift; sourceTree = "<group>"; };
 		122B025320892930004894CD /* EnemyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyFactory.swift; sourceTree = "<group>"; };
+		122B025620893A7B004894CD /* DebugUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUI.swift; sourceTree = "<group>"; };
 		12FFA3062064545A00BFD178 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 		120695C02061B32B008948B7 /* ProjectK */ = {
 			isa = PBXGroup;
 			children = (
+				122B025520893A6C004894CD /* Debug */,
 				122B025220892909004894CD /* Enemies */,
 				120695D92061B35F008948B7 /* BaseCharacter */,
 				120695C12061B32B008948B7 /* AppDelegate.swift */,
@@ -96,6 +99,14 @@
 				122B025320892930004894CD /* EnemyFactory.swift */,
 			);
 			path = Enemies;
+			sourceTree = "<group>";
+		};
+		122B025520893A6C004894CD /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				122B025620893A7B004894CD /* DebugUI.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +187,7 @@
 				122B025420892930004894CD /* EnemyFactory.swift in Sources */,
 				120695CA2061B32B008948B7 /* GameViewController.swift in Sources */,
 				120695DB2061B37A008948B7 /* GameObject.swift in Sources */,
+				122B025720893A7B004894CD /* DebugUI.swift in Sources */,
 				120695DD2061BC62008948B7 /* Player.swift in Sources */,
 				120695C22061B32B008948B7 /* AppDelegate.swift in Sources */,
 			);

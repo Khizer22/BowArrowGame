@@ -15,7 +15,7 @@ class GameScene: SKScene {
     let enemy = Enemy()
     let background = SKSpriteNode(imageNamed: "background2")
     
-    var baseObjects ? [GameObject()]
+    var baseObjects = [GameObject]()
     
     override func didMove(to view: SKView) {
         //test background
@@ -31,7 +31,7 @@ class GameScene: SKScene {
         //init all game objects
         for objects in baseObjects{
             addChild(objects)
-            objects.SetInitPosition(newPos: CGPoint(x: size.width / 2, y: size.height / 2 ))
+            objects.SetInitPosition(screenSize : size)
         }
     }
     

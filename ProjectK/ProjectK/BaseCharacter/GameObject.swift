@@ -15,15 +15,19 @@ class GameObject : SKSpriteNode {
     var moveToTarget = CGPoint(x: 0, y: 0)
     var rotateToTarget = CGPoint (x:0, y: 0)
     var initPos = CGPoint(x: 0, y: 0)
-    var screenSize = CGPoint(x: 0, y: 0)
+    var screenSize = CGSize()
     
-    init(imageName : String, pos : CGPoint) {
+    init(imageName : String) {
         let texture = SKTexture(imageNamed : imageName)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
-        position = pos
-        self.SetTarget(newTarget: pos)
+    }
+
+    //Init position and get screen size for reference
+    func SetInitPosition(screenSize : CGSize){
+        self.screenSize = screenSize
     }
     
+    //Old functions
     func MoveTo(){
         
         var moveToPos = CGPoint(x: position.x - moveToTarget.x, y: position.y - moveToTarget.y)
@@ -43,16 +47,6 @@ class GameObject : SKSpriteNode {
     
     func SetRotateTarget(newTarget : CGPoint){
         rotateToTarget = newTarget
-        
-    }
-    
-    func SetInitPosition(newPos : CGPoint){
-        position = newPos
-        initPos = newPos
-    }
-    
-    func GetScreenSize(screenSize : CGPoint){
-        self.screenSize = screenSize
     }
     
     required init?(coder aDecoder: NSCoder) {

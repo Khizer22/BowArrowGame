@@ -11,9 +11,13 @@ import SpriteKit
 
 class Player : GameObject{
     init(){
-        super.init(imageName: "bow", pos: CGPoint(x: 450,y: 450))
-        
-        SetInitPosition(newPos: CGPoint(x: size.width / 2, y: size.height / 2 ))
+        super.init(imageName: "bow")
+    }
+    
+    override func SetInitPosition(screenSize: CGSize) {
+        super.SetInitPosition(screenSize : CGSize())
+        initPos = CGPoint(x: screenSize.width/2, y: screenSize.height/2)
+        position = initPos
     }
     
     func RotateTowards(){
