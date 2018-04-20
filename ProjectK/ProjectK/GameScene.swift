@@ -11,11 +11,14 @@ import GameplayKit
 
 class GameScene: SKScene {
     let player = Player()
-    let arrow = Projectile()
-    let enemy = Enemy()
+    //let arrow = Projectile()
+   // let enemy = Enemy()
     let background = SKSpriteNode(imageNamed: "Background3")
     
     var baseObjects = [GameObject]()
+    
+    //DEBUG
+    var debugUI = DebugUI()
     
     override func didMove(to view: SKView) {
         //test background
@@ -33,6 +36,9 @@ class GameScene: SKScene {
             addChild(objects)
             objects.SetInitPosition(screenSize : size)
         }
+        
+        //DEBUG
+        addChild(debugUI)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -43,6 +49,8 @@ class GameScene: SKScene {
         //enemy.SetTarget(newTarget: CGPoint(x:size.width,y: size.height/1.25))
         //enemy.Update()
         
+        //DEBUG UI
+        debugUI.text = "State: " + player.myState.rawValue
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

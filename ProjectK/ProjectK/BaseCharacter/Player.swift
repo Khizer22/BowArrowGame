@@ -11,7 +11,7 @@ import SpriteKit
 
 class Player : GameObject{
     
-    enum EState {
+    enum EState : String {
         //Idle
         case Idle
         //Jabs
@@ -25,7 +25,9 @@ class Player : GameObject{
         case Dead
     }
     
+    //State
     var myState : EState = EState.Idle
+    var backToIdleTime : CGFloat = 1.0
     
     //touch locations
     var startTouchPos = CGPoint(x: 0, y: 0)
@@ -57,69 +59,83 @@ class Player : GameObject{
     //Get Final Touch Position
     func GetFinalPosition(finalPos : CGPoint){
         
-        endTouchPos = finalPos
+        if (myState == EState.Idle){
+            endTouchPos = finalPos
+            SetState(newState: CalculateNewStateFromInput())
+        }
+    }
+    
+    //Change State
+    func SetState(newState : EState){
         
+        //Dont switch to same state unless its the hurt state
+        if (myState == newState && myState != EState.Hurt){
+            return
+        }
+                
+        myState = newState
+       
+        //Play New Animation based on state
+        ChangeAnimation()
+    }
+    
+    func ChangeAnimation(){
+        
+        
+    }
+    
+    //Calculate New State
+    func CalculateNewStateFromInput() -> EState{
+        
+        var newState : EState = EState.Idle
+
         //Determine what kind of attack to do
         //****ATTACKS****
-            //Swipe up = Jump Attack
-            //Swipe Right = Long Kick
-            //Tap Up side of  screen = Jab up
-            //Tab Bottom side of screen = Jab Down
-            //Might add block/parry
+        //Swipe up = Jump Attack
+        //Swipe Right = Long Kick
+        //Tap Up side of  screen = Jab up
+        //Tab Bottom side of screen = Jab Down
+        //Might add block/parry
         //****ATTACKS END*****
         
         //Calculate Length of touches
         var TouchDir = CGPoint(x: startTouchPos.x - endTouchPos.x, y: startTouchPos.y - endTouchPos.y)
         let hypotenuse = sqrt(TouchDir.x * TouchDir.x + TouchDir.y * TouchDir.y)
         
+        //SWIPPING
         if (hypotenuse >= consideredForSwipe){
             //Check if swiping up or down
-            if (abs(finalPos.y) > abs(finalPos.x)){
-                if (finalPos.y >= 0){
-                    NSLog("%@", "SWIPE-UP")
+            if (abs(TouchDir.y) > abs(TouchDir.x)){
+                if (TouchDir.y >= 0){
+                    NSLog("%@", "SWIPE-DOWN")
+                    newState = EState.JumpAttack
                 }
                 else{
-                    NSLog("%@", "SWIPE-DOWN")
+                    NSLog("%@", "SWIPE-UP")
+                    newState = EState.JumpAttack
                 }
             }
             else{
                 NSLog("%@", "SWIPE-RIGHT")
+                newState = EState.LongKick
             }
             
+            //TAPPING
         }
         else{
             //Check what part of screen is tapped
-            if (finalPos.y >= screenSize.height/2){
-                ChangeState(newState: EState.JabUP)
+            if (endTouchPos.y >= screenSize.height/2){
+                newState = EState.JabUP
                 NSLog("%@", "JAB-UP")
             }
-            else if (finalPos.y < screenSize.height/2){
-                ChangeState(newState: EState.JabDOWN)
+            else if (endTouchPos.y < screenSize.height/2){
+                newState = EState.JabDOWN
                 NSLog("%@", "JAB-DOWN")
             }
-      
+            
         }
         
-        /*
-        endShootPos = finalPos
-        
-        //Calculate Shoot Force and dir
-        var shootDir = CGPoint(x: startShootPos.x - endShootPos.x, y: startShootPos.y - endShootPos.y)
-        //let hypotenuse = sqrt(shootDir.x * shootDir.x + shootDir.y * shootDir.y)
-        
-        //Shoot arrow if not in air
-        if (myState == EState.Dormant){
-            Shoot(shootForce : CGVector(dx: shootForce * shootDir.x, dy: shootForce * shootDir.y))
-            SetState(myState: EState.Reloading)
-            shootTime = gameTime + reloadSpeed
-        }
- */
-    }
-    
-    //Change State
-    func ChangeState(newState : EState){
-        myState = newState
-       
+        return newState
     }
     
     /*
