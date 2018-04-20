@@ -23,7 +23,7 @@ class Enemy : GameObject{
     }
     
     override func SetInitPosition(screenSize: CGSize) {
-        super.SetInitPosition(screenSize : CGSize())
+        super.SetInitPosition(screenSize : screenSize)
         initPos = CGPoint(x: 0 - size.width/2, y: screenSize.height - (size.height/2 + 300))
         position = initPos
     }

@@ -27,6 +27,7 @@ class GameObject : SKSpriteNode {
         self.screenSize = screenSize
     }
     
+    /*
     //Old functions
     func MoveTo(){
         
@@ -48,7 +49,7 @@ class GameObject : SKSpriteNode {
     func SetRotateTarget(newTarget : CGPoint){
         rotateToTarget = newTarget
     }
-    
+    */
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
     }
