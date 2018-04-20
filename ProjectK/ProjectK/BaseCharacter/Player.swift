@@ -27,7 +27,10 @@ class Player : GameObject{
     
     //State
     var myState : EState = EState.Idle
-    var backToIdleTime : CGFloat = 1.0
+    var backToIdleTime : TimeInterval = 1.0
+    
+    //Timer
+    var timer = Timer()
     
     //touch locations
     var startTouchPos = CGPoint(x: 0, y: 0)
@@ -74,17 +77,36 @@ class Player : GameObject{
         }
                 
         myState = newState
+        startIdleTimer()
        
         //Play New Animation based on state
         ChangeAnimation()
     }
     
     func ChangeAnimation(){
-        
+        //Play new animation
         
     }
     
-    //Calculate New State
+    
+    //***TIMER FOR IDLE STATE***
+    
+    // Start Timer to set to idle state
+    @IBAction func startIdleTimer() {
+        timer.invalidate() // just in case this button is tapped multiple times
+        
+        // start the timer
+       timer = Timer.scheduledTimer(timeInterval: backToIdleTime, target: self, selector: #selector(ChangeToIdleState), userInfo: nil, repeats: false)
+    }
+    
+    //Change back to idle State
+    @objc func ChangeToIdleState() {
+        SetState(newState: EState.Idle)
+    }
+    
+    //*** END TIMER FOR IDLE ***//
+    
+    //Calculate New State From Input
     func CalculateNewStateFromInput() -> EState{
         
         var newState : EState = EState.Idle
@@ -109,15 +131,18 @@ class Player : GameObject{
                 if (TouchDir.y >= 0){
                     NSLog("%@", "SWIPE-DOWN")
                     newState = EState.JumpAttack
+                    backToIdleTime = 0.5
                 }
                 else{
                     NSLog("%@", "SWIPE-UP")
                     newState = EState.JumpAttack
+                    backToIdleTime = 0.5
                 }
             }
             else{
                 NSLog("%@", "SWIPE-RIGHT")
                 newState = EState.LongKick
+                backToIdleTime = 1.0
             }
             
             //TAPPING
@@ -126,10 +151,12 @@ class Player : GameObject{
             //Check what part of screen is tapped
             if (endTouchPos.y >= screenSize.height/2){
                 newState = EState.JabUP
+                backToIdleTime = 0.1
                 NSLog("%@", "JAB-UP")
             }
             else if (endTouchPos.y < screenSize.height/2){
                 newState = EState.JabDOWN
+                backToIdleTime = 0.1
                 NSLog("%@", "JAB-DOWN")
             }
             
