@@ -85,9 +85,8 @@ class Player : GameObject{
     
     func ChangeAnimation(){
         //Play new animation
-        
+        texture = SKTexture(imageNamed: "Player")
     }
-    
     
     //***TIMER FOR IDLE STATE***
     
@@ -102,6 +101,7 @@ class Player : GameObject{
     //Change back to idle State
     @objc func ChangeToIdleState() {
         SetState(newState: EState.Idle)
+        texture = SKTexture(imageNamed: "Player2")
     }
     
     //*** END TIMER FOR IDLE ***//
