@@ -29,6 +29,15 @@ class Player : GameObject{
     var myState : EState = EState.Idle
     var backToIdleTime : TimeInterval = 1.0
     
+    //AnimationTextures
+    let idleTextures = [SKTexture]()
+    let jabUpTextures = [SKTexture]()
+    let jabDownTextures = [SKTexture]()
+    let longKickTextures = [SKTexture]()
+    let jumpickTextures = [SKTexture]()
+    //more later.....
+
+    
     //Timer
     var timer = Timer()
     
@@ -83,9 +92,13 @@ class Player : GameObject{
         ChangeAnimation()
     }
     
-    func ChangeAnimation(){
-        //Play new animation
-        texture = SKTexture(imageNamed: "Player")
+    override func ChangeAnimation() {
+        switch myState {
+        case EState.Idle:
+            <#code#>
+        default:
+            <#code#>
+        }
     }
     
     //***TIMER FOR IDLE STATE***
@@ -101,7 +114,7 @@ class Player : GameObject{
     //Change back to idle State
     @objc func ChangeToIdleState() {
         SetState(newState: EState.Idle)
-        texture = SKTexture(imageNamed: "Player2")
+        
     }
     
     //*** END TIMER FOR IDLE ***//
@@ -163,6 +176,16 @@ class Player : GameObject{
         }
         
         return newState
+    }
+    
+    override func InitAnimations() {
+        idleTextures = [ SKTexture(imageNamed: "Idle1"),SKTexture(imageNamed: "Idle2"),SKTexture(imageNamed: "Idle3"),SKTexture(imageNamed: "Idle4")]
+        
+        for index in 1 ... 4 {
+            let textureName = "idle(index)"
+            let texture = SKTexture(imageNamed: textureName)
+            idleTextures.append(texture)
+        }
     }
     
     /*

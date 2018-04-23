@@ -20,6 +20,8 @@ class GameObject : SKSpriteNode {
     init(imageName : String) {
         let texture = SKTexture(imageNamed : imageName)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
+        
+        PlayAnimation()
     }
 
     //Init position and get screen size for reference
@@ -27,29 +29,18 @@ class GameObject : SKSpriteNode {
         self.screenSize = screenSize
     }
     
-    /*
-    //Old functions
-    func MoveTo(){
-        
-        var moveToPos = CGPoint(x: position.x - moveToTarget.x, y: position.y - moveToTarget.y)
-        let length = sqrt(moveToPos.x * moveToPos.x + moveToPos.y * moveToPos.y)
-        moveToPos.x = moveToPos.x / length * moveSpeed
-        moveToPos.y = moveToPos.y / length * moveSpeed
-        
-        if (abs( position.x - moveToTarget.x) > moveSpeed + 1){
-            position = CGPoint(x: position.x - moveToPos.x,y: position.y - moveToPos.y)
-        }
-        
-    }
+    //Init animations if object has them
+    func InitAnimations(){}
     
-    func SetTarget(newTarget : CGPoint){
-        moveToTarget = newTarget
-    }
+    func ChangeAnimation(){}
     
-    func SetRotateTarget(newTarget : CGPoint){
-        rotateToTarget = newTarget
+    func PlayAnimation(animTextures : [SKTexture], animFPS : TimeInterval){
+        let animate = SKAction.animate(with: animTextures,
+                                       timePerFrame: animFPS)
+        let repeatAnimation = SKAction.repeatForever(animate)
+        run(repeatAnimation)
     }
-    */
+   
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
     }
