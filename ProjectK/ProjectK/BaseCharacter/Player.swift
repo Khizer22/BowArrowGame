@@ -49,17 +49,26 @@ class Player : GameObject{
     
     init(){
         super.init(imageName: "Player")
+        
+        physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
+        physicsBody?.pinned = true
+        physicsBody?.allowsRotation = false
+        //physicsBody?.isDynamic = false
+        //physicsBody?.affectedByGravity = false
+        physicsBody!.contactTestBitMask = physicsBody!.collisionBitMask
+        
+        name = "Player"
     }
     
     override func SetInitPosition(screenSize: CGSize) {
         super.SetInitPosition(screenSize: screenSize)
         
         //Set position depending on Screen
-        initPos = CGPoint(x: size.width/2 + 300, y: 400)
+        initPos = CGPoint(x: size.width/2 + 300, y: 700)
         position = initPos
         
         //Scale up the player
-        scale(to: CGSize(width: 350, height: 350))
+        scale(to: CGSize(width: 550, height: 550))
     }
     
     //Get Initial Touch Position

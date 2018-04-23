@@ -27,7 +27,7 @@ class DebugUI : SKLabelNode{
         text = "You Win!"
         fontSize = 65
         fontColor = SKColor.black
-        position = CGPoint(x: 300, y: 900)
+        position = CGPoint(x: 300, y: 1200)
         
        // addChild(winner)
     }

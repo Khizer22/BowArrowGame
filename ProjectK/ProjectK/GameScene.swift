@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene , SKPhysicsContactDelegate{
     let player = Player()
     //let arrow = Projectile()
    // let enemy = Enemy()
@@ -44,6 +44,9 @@ class GameScene: SKScene {
         
         //DEBUG
         addChild(debugUI)
+        
+        //Physics
+        physicsWorld.contactDelegate = self
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -54,8 +57,10 @@ class GameScene: SKScene {
         //enemy.SetTarget(newTarget: CGPoint(x:size.width,y: size.height/1.25))
         //enemy.Update()
         
+        enemyFactory.Update()
+        
         //DEBUG UI
-        debugUI.text = "State: " + player.myState.rawValue
+       // debugUI.text = "State: " + player.myState.rawValue
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -93,5 +98,18 @@ class GameScene: SKScene {
         
         //player.SetRotateTarget(newTarget: touch.location(in: self))  //set target for rotation
         //player.RotateTowards() //rotate towards target
+    }
+ 
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "Player" {
+            NSLog("%@", "Hit Player")
+            contact.bodyB.node?.isHidden = true
+            
+            //Player loses hp
+            
+            //OR
+            
+            //Player gains score when contact is with attack box and ball
+        }
     }
 }

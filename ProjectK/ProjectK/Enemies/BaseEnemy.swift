@@ -12,36 +12,32 @@ import SpriteKit
 
 class BaseEnemy : GameObject{
     
-    var inUse : boolean_t = 0
+    //Object pooling
+    var inUse : Bool = false
+    
     
     init(){
         super.init(imageName: "alienYellow")
         
         //Create circular Physics body
         physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
+        //physicsBody?.isDynamic = false
         physicsBody?.affectedByGravity = false
-    }
-    
-    
-    
-    
-    /*
-    override func SetInitPosition(screenSize: CGSize) {
-        super.SetInitPosition(screenSize : screenSize)
-        initPos = CGPoint(x: 0 - size.width/2, y: screenSize.height - (size.height/2 + 300))
-        position = initPos
+        physicsBody!.contactTestBitMask = physicsBody!.collisionBitMask
+        
+        name = "Enemy"
     }
     
     func Update(){
-        //move left or right
-        physicsBody?.velocity = CGVector(dx: 550, dy: 0)
+        if (isHidden){
+            inUse = false
+        }
         
-      //  if (position.x > screenSize.x){
-            //SetTarget(newTarget: CGPoint(x: -screenSize.x,y: screenSize.y / 1.25)) //change later
-          //  physicsBody?.velocity = CGVector(dx: -350, dy: 0)
-       /// }
+        if (inUse){
+            physicsBody?.velocity = CGVector(dx: -1450, dy: 0)
+        }
     }
-*/
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
     }
