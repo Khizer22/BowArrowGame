@@ -29,7 +29,7 @@ class DebugUI : SKLabelNode{
         fontColor = SKColor.black
         position = CGPoint(x: 300, y: 1200)
         
-       // addChild(winner)
+      
     }
         
     required init?(coder aDecoder: NSCoder) {

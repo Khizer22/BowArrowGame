@@ -39,6 +39,7 @@ class Player : GameObject{
     
     //Timer
     var timer = Timer()
+    var hurtTimer = Timer()
     
     //touch locations
     var startTouchPos = CGPoint(x: 0, y: 0)
@@ -64,11 +65,11 @@ class Player : GameObject{
         super.SetInitPosition(screenSize: screenSize)
         
         //Set position depending on Screen
-        initPos = CGPoint(x: size.width/2 + 300, y: 700)
+        initPos = CGPoint(x: size.width/2 + 300, y: 550)
         position = initPos
         
         //Scale up the player
-        scale(to: CGSize(width: 550, height: 550))
+        scale(to: CGSize(width: 550, height: 750))
     }
     
     //Get Initial Touch Position
@@ -122,8 +123,12 @@ class Player : GameObject{
     
     //Change back to idle State
     @objc func ChangeToIdleState() {
-        SetState(newState: EState.Idle)
-        
+        if (currentHealth > 0){
+            SetState(newState: EState.Idle)
+        }
+        else{
+            timer.invalidate()
+        }
     }
     
     //*** END TIMER FOR IDLE ***//
@@ -207,6 +212,39 @@ class Player : GameObject{
             idleTextures.append(texture)
         }
 
+    }
+    
+    func TakeDamage(damageAmount : CGFloat){
+        if (currentHealth > 0){
+            currentHealth -= damageAmount
+            PlayHurtSprite()
+        }
+        if (currentHealth <= 0){
+            SetState(newState: EState.Dead)
+        }
+    }
+    
+    func PlayHurtSprite(){
+        //self.color = UIColor.red
+       // self.colorBlendFactor = 1
+        
+        let action = SKAction.colorize(with: UIColor.red, colorBlendFactor: 1, duration: 0.2)
+        run(action)
+        startReturnColorTimer()
+    }
+    
+    // Start Timer to set to idle state
+    @IBAction func startReturnColorTimer() {
+        hurtTimer.invalidate() // just in case this button is tapped multiple times
+        
+        // start the timer
+        hurtTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ChangeColorToDefault), userInfo: nil, repeats: false)
+    }
+    
+    //Change back to idle State
+    @objc func ChangeColorToDefault() {
+        let action = SKAction.colorize(with: UIColor.white, colorBlendFactor: 1, duration: 0.1)
+        run(action)
     }
     
     /*

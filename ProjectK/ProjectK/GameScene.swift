@@ -20,6 +20,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     
     //DEBUG
     var debugUI = DebugUI()
+    var healthUI = DebugUI()
     
     override func didMove(to view: SKView) {
         //test background
@@ -44,6 +45,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //DEBUG
         addChild(debugUI)
+        addChild(healthUI)
+        healthUI.position = CGPoint(x: 900, y: 1200)
         
         //Physics
         physicsWorld.contactDelegate = self
@@ -52,15 +55,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
-        //arrow.Update(currentTime: currentTime)
-        
-        //enemy.SetTarget(newTarget: CGPoint(x:size.width,y: size.height/1.25))
-        //enemy.Update()
-        
         enemyFactory.Update()
         
         //DEBUG UI
-       // debugUI.text = "State: " + player.myState.rawValue
+        debugUI.text = "State: " + player.myState.rawValue
+        healthUI.text = "Health: \(player.currentHealth)"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,18 +85,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         let touch: UITouch = touches.first as! UITouch
         
-        //Arrow
-        //arrow.GetFinalPosition(finalPos: touch.location(in: self))
-        
         //Player Gather Input End
         player.GetFinalPosition(finalPos: touch.location(in: self))
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch: UITouch = touches.first as! UITouch
-        
-        //player.SetRotateTarget(newTarget: touch.location(in: self))  //set target for rotation
-        //player.RotateTowards() //rotate towards target
     }
  
     func didBegin(_ contact: SKPhysicsContact) {
@@ -106,6 +99,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             contact.bodyB.node?.isHidden = true
             
             //Player loses hp
+            player.TakeDamage(damageAmount: 1.0)
             
             //OR
             
