@@ -20,8 +20,7 @@ class GameObject : SKSpriteNode {
     init(imageName : String) {
         let texture = SKTexture(imageNamed : imageName)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
-        
-        PlayAnimation()
+        InitAnimations()
     }
 
     //Init position and get screen size for reference

@@ -13,6 +13,7 @@ class GameScene: SKScene {
     let player = Player()
     //let arrow = Projectile()
    // let enemy = Enemy()
+    let enemyFactory = EnemyFactory()
     let background = SKSpriteNode(imageNamed: "Background3")
     
     var baseObjects = [GameObject]()
@@ -36,6 +37,9 @@ class GameScene: SKScene {
             addChild(objects)
             objects.SetInitPosition(screenSize : size)
         }
+        
+        //EnemyFactory
+        addChild(enemyFactory)
         
         //DEBUG
         addChild(debugUI)

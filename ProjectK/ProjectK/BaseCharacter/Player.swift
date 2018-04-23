@@ -30,11 +30,11 @@ class Player : GameObject{
     var backToIdleTime : TimeInterval = 1.0
     
     //AnimationTextures
-    let idleTextures = [SKTexture]()
-    let jabUpTextures = [SKTexture]()
-    let jabDownTextures = [SKTexture]()
-    let longKickTextures = [SKTexture]()
-    let jumpickTextures = [SKTexture]()
+    var idleTextures = [SKTexture]()
+    var jabUpTextures = [SKTexture]()
+    var jabDownTextures = [SKTexture]()
+    var longKickTextures = [SKTexture]()
+    var jumpickTextures = [SKTexture]()
     //more later.....
 
     
@@ -95,9 +95,10 @@ class Player : GameObject{
     override func ChangeAnimation() {
         switch myState {
         case EState.Idle:
-            <#code#>
+            PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
         default:
-            <#code#>
+            PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
+
         }
     }
     
@@ -179,13 +180,25 @@ class Player : GameObject{
     }
     
     override func InitAnimations() {
-        idleTextures = [ SKTexture(imageNamed: "Idle1"),SKTexture(imageNamed: "Idle2"),SKTexture(imageNamed: "Idle3"),SKTexture(imageNamed: "Idle4")]
-        
+        //IDLE
         for index in 1 ... 4 {
-            let textureName = "idle(index)"
+            let textureName = "Idle\(index)"
             let texture = SKTexture(imageNamed: textureName)
             idleTextures.append(texture)
         }
+        //JabUp
+        for index in 1 ... 4 {
+            let textureName = "Idle\(index)"
+            let texture = SKTexture(imageNamed: textureName)
+            idleTextures.append(texture)
+        }
+        //JabLow
+        for index in 1 ... 4 {
+            let textureName = "Idle\(index)"
+            let texture = SKTexture(imageNamed: textureName)
+            idleTextures.append(texture)
+        }
+
     }
     
     /*
