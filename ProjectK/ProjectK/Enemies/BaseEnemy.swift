@@ -10,7 +10,9 @@
 import Foundation
 import SpriteKit
 
-class Enemy : GameObject{
+class BaseEnemy : GameObject{
+    
+    var inUse : boolean_t = 0
     
     init(){
         super.init(imageName: "alienYellow")
@@ -18,10 +20,12 @@ class Enemy : GameObject{
         //Create circular Physics body
         physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
         physicsBody?.affectedByGravity = false
-        
-        
     }
     
+    
+    
+    
+    /*
     override func SetInitPosition(screenSize: CGSize) {
         super.SetInitPosition(screenSize : screenSize)
         initPos = CGPoint(x: 0 - size.width/2, y: screenSize.height - (size.height/2 + 300))
@@ -37,7 +41,7 @@ class Enemy : GameObject{
           //  physicsBody?.velocity = CGVector(dx: -350, dy: 0)
        /// }
     }
-
+*/
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
     }

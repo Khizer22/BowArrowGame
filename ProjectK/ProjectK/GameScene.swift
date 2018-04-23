@@ -40,6 +40,7 @@ class GameScene: SKScene {
         
         //EnemyFactory
         addChild(enemyFactory)
+        enemyFactory.SetInitPosition(screenSize: size)
         
         //DEBUG
         addChild(debugUI)

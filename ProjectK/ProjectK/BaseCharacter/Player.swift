@@ -36,7 +36,6 @@ class Player : GameObject{
     var longKickTextures = [SKTexture]()
     var jumpickTextures = [SKTexture]()
     //more later.....
-
     
     //Timer
     var timer = Timer()
@@ -182,19 +181,19 @@ class Player : GameObject{
     override func InitAnimations() {
         //IDLE
         for index in 1 ... 4 {
-            let textureName = "Idle\(index)"
+            let textureName = "idle\(index)"
             let texture = SKTexture(imageNamed: textureName)
             idleTextures.append(texture)
         }
         //JabUp
         for index in 1 ... 4 {
-            let textureName = "Idle\(index)"
+            let textureName = "idle\(index)"
             let texture = SKTexture(imageNamed: textureName)
             idleTextures.append(texture)
         }
         //JabLow
         for index in 1 ... 4 {
-            let textureName = "Idle\(index)"
+            let textureName = "idle\(index)"
             let texture = SKTexture(imageNamed: textureName)
             idleTextures.append(texture)
         }

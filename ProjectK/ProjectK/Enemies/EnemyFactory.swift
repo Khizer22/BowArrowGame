@@ -11,23 +11,37 @@ import SpriteKit
 
 class EnemyFactory : SKNode{
     
-    var Enemies = [GameObject]()
-    var paan = Enemy()
+    //Enemy spawning parameters
+    var moveSpeed : CGFloat = 5.0
+    var damage : CGFloat = 5.0
+    
+    var screenSize = CGSize()
+    var Enemies = [BaseEnemy]()
     
     override init(){
         super.init()
-        Enemies.append(Enemy())
+        
+        //TEMP
+        Enemies.append(BaseEnemy())
+        
+        for enemies in Enemies{
+            addChild(enemies)
+        }
     }
     
     //Init position and get screen size for reference
     func SetInitPosition(screenSize : CGSize){
-        //init all game objects
-        for enemies in Enemies{
-            enemies.SetInitPosition(screenSize : screenSize)
-            enemies.position = CGPoint(x: 500, y: 500)
-        }
-        paan.position = CGPoint(x: 500, y: 500)
+        
+        self.screenSize = screenSize
+        position = CGPoint(x:screenSize.width/2,y:screenSize.height/2)
     }
+    
+    //Spawn enemies
+    func SpawnEnemies(){
+        
+        
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
