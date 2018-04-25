@@ -305,7 +305,7 @@ class Player : GameObject{
 
     }
     
-    func TakeDamage(damageAmount : CGFloat){
+    func TakeDamage(damageAmount : Int){
         if (currentHealth > 0){
             currentHealth -= damageAmount
             PlayHurtSprite()

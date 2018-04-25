@@ -10,9 +10,9 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene , SKPhysicsContactDelegate{
+    let gameMode = GameMode()
+    
     let player = Player()
-    //let arrow = Projectile()
-   // let enemy = Enemy()
     let enemyFactory = EnemyFactory()
     let background = SKSpriteNode(imageNamed: "Background3")
     
@@ -20,7 +20,6 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     
     //DEBUG
     var debugUI = DebugUI()
-    var healthUI = DebugUI()
     
     override func didMove(to view: SKView) {
         //test background
@@ -45,8 +44,10 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //DEBUG
         addChild(debugUI)
-        addChild(healthUI)
-        healthUI.position = CGPoint(x: 900, y: 1200)
+        
+        //GameMode
+        addChild(gameMode)
+        gameMode.UpdateHealth(currentHP: player.currentHealth)
         
         //Physics
         physicsWorld.contactDelegate = self
@@ -59,20 +60,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //DEBUG UI
         debugUI.text = "State: " + player.myState.rawValue
-        healthUI.text = "Health: \(player.currentHealth)"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
         let touch: UITouch = touches.first as! UITouch
-        
-        //player.SetTarget(newTarget: touch.location(in: self))  //set target for player to move to
-        //player.SetRotateTarget(newTarget: touch.location(in: self))  //set target for rotation
-        //player.RotateTowards() //rotate towards target
-        
-        //Arrow
-        //arrow.GetInitialPosition(initPos: touch.location(in: self))
         
         //Player Gather Input
         player.GetInitialPosition(initPos: touch.location(in: self))
@@ -99,15 +92,22 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             contact.bodyB.node?.isHidden = true
             
             //Player loses hp
-            player.TakeDamage(damageAmount: 1.0)
+            player.TakeDamage(damageAmount: 1)
+            gameMode.UpdateHealth(currentHP: player.currentHealth)
             
             //OR
             
             //Player gains score when contact is with attack box and ball
         }
         else if contact.bodyA.node?.name == "attackBox" {
+            if (contact.bodyB.node?.isHidden == false){
+                //add score if not hidden
+                gameMode.AddScore(amount: 1)
+            }
+            //hide it
             contact.bodyB.node?.isHidden = true
-            //player gains score
+            //update difficulty
+            enemyFactory.difficulty = gameMode.UpdateDifficulty()
         }
     }
 }

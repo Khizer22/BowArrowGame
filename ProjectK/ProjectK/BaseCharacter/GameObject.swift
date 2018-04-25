@@ -17,7 +17,7 @@ class GameObject : SKSpriteNode {
     var initPos = CGPoint(x: 0, y: 0)
     var screenSize = CGSize()
     
-    var currentHealth : CGFloat = 5
+    var currentHealth : Int = 5
     
     init(imageName : String) {
         let texture = SKTexture(imageNamed : imageName)

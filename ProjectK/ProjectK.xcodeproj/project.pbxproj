@@ -19,6 +19,7 @@
 		1229D36D208E9E710065EF22 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229D36C208E9E710065EF22 /* MenuScene.swift */; };
 		122B025420892930004894CD /* EnemyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B025320892930004894CD /* EnemyFactory.swift */; };
 		122B025720893A7B004894CD /* DebugUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B025620893A7B004894CD /* DebugUI.swift */; };
+		127363452091259800062229 /* MyGameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127363442091259800062229 /* MyGameMode.swift */; };
 		12FFA3072064545A00BFD178 /* BaseEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FFA3062064545A00BFD178 /* BaseEnemy.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		1229D36C208E9E710065EF22 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		122B025320892930004894CD /* EnemyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyFactory.swift; sourceTree = "<group>"; };
 		122B025620893A7B004894CD /* DebugUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUI.swift; sourceTree = "<group>"; };
+		127363442091259800062229 /* MyGameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGameMode.swift; sourceTree = "<group>"; };
 		12FFA3062064545A00BFD178 /* BaseEnemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEnemy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 		120695C02061B32B008948B7 /* ProjectK */ = {
 			isa = PBXGroup;
 			children = (
+				127363432091258A00062229 /* GameMode */,
 				122B025520893A6C004894CD /* Debug */,
 				122B025220892909004894CD /* Enemies */,
 				120695D92061B35F008948B7 /* BaseCharacter */,
@@ -110,6 +113,14 @@
 				122B025620893A7B004894CD /* DebugUI.swift */,
 			);
 			path = Debug;
+			sourceTree = "<group>";
+		};
+		127363432091258A00062229 /* GameMode */ = {
+			isa = PBXGroup;
+			children = (
+				127363442091259800062229 /* MyGameMode.swift */,
+			);
+			path = GameMode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,6 +199,7 @@
 				120695DF2061C7CD008948B7 /* Projectile.swift in Sources */,
 				120695C82061B32B008948B7 /* GameScene.swift in Sources */,
 				122B025420892930004894CD /* EnemyFactory.swift in Sources */,
+				127363452091259800062229 /* MyGameMode.swift in Sources */,
 				120695CA2061B32B008948B7 /* GameViewController.swift in Sources */,
 				120695DB2061B37A008948B7 /* GameObject.swift in Sources */,
 				122B025720893A7B004894CD /* DebugUI.swift in Sources */,

@@ -15,12 +15,20 @@ class EnemyFactory : SKNode{
     var moveSpeed : CGFloat = 5.0
     var damage : CGFloat = 5.0
     
+    //Spawning system
+    var sendAmount : Int = 3
+    var canSend = true
+    
     //Timer
     var timer = Timer()
-    var spawnDelay = 1.0
+    var spawndelayTimer = Timer()
+    var spawnDelay = 0.3
     
     var screenSize = CGSize()
     var Enemies = [BaseEnemy]()
+    
+    //difficutly
+    var difficulty : Int = 0
     
     override init(){
         super.init()
@@ -36,13 +44,16 @@ class EnemyFactory : SKNode{
             addChild(enemies)
         }
         
-        //TEST
-        startSpawningTimer()
+        //SendEnemies()
     }
     
     func Update(){
         for enemies in Enemies{
            enemies.Update()
+        }
+        
+        if (canSend){
+            SendEnemies()
         }
     }
     
@@ -51,6 +62,17 @@ class EnemyFactory : SKNode{
         
         self.screenSize = screenSize
         position = CGPoint(x:screenSize.width/2,y:screenSize.height/2)
+    }
+    
+    func SendEnemies(){
+        
+        //how many to send
+        sendAmount = 3
+        
+        //start sending that many
+        startSpawningTimer()
+        
+        canSend = false
     }
     
     //TIMER TO START SPAWNING ENEMIES
@@ -69,12 +91,33 @@ class EnemyFactory : SKNode{
                 enemies.isHidden = false
                 enemies.position = CGPoint(x: screenSize.width,y: 0)
                 enemies.inUse = true
+                
+                //Spawning system
+                sendAmount -= 1
+                
                 break
             }
         }
         
+        if (sendAmount <= 0){
+            timer.invalidate()
+            setCanSend()
+        }
     }
     
+    //TIMER TO START SPAWNER
+    // Start Timer to set to idle state
+    @IBAction func setCanSend() {
+        spawndelayTimer.invalidate() // just in case this button is tapped multiple times
+        
+        // start the timer
+        spawndelayTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SetCanSendTrue), userInfo: nil, repeats: false)
+    }
+    
+    //Change back to idle State
+    @objc func SetCanSendTrue() {
+        canSend = true
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
