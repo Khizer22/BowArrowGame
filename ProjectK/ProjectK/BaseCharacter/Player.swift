@@ -40,6 +40,8 @@ class Player : GameObject{
     //Timer
     var timer = Timer()
     var hurtTimer = Timer()
+    var attackTimer = Timer()
+    var stopAttackTimer = Timer()
     
     //touch locations
     var startTouchPos = CGPoint(x: 0, y: 0)
@@ -47,18 +49,46 @@ class Player : GameObject{
     let consideredForSwipe : CGFloat = 300.0
     
     //Parameters
+    let attackNode = SKNode()
+    let attackXLocation = 150
+    let jabDownLocation = -150
+    let jabUpLocation = 150
+    let nuetralLocation = 950
+    var lastState = EState.Idle
+    
+    //DEBUG
+    var naan = SKShapeNode(rectOf: CGSize(width: 350, height: 150))
     
     init(){
         super.init(imageName: "Player")
         
-        physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
+        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width,                                                                            height: size.height))
         physicsBody?.pinned = true
         physicsBody?.allowsRotation = false
         //physicsBody?.isDynamic = false
         //physicsBody?.affectedByGravity = false
         physicsBody!.contactTestBitMask = physicsBody!.collisionBitMask
         
+        //physics body for attacking
+        attackNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 350,                                                                             height: 150))
+        attackNode.physicsBody?.pinned = true
+        attackNode.physicsBody?.allowsRotation = false
+        attackNode.physicsBody!.contactTestBitMask = attackNode.physicsBody!.collisionBitMask
+        attackNode.name = "attackBox"
+        attackNode.position = CGPoint(x: attackXLocation, y: nuetralLocation)
+        addChild(attackNode)
+        
+        //TESTING
+        //self.naan = SKShapeNode(rectOf: CGSize(width: 350, height: 150))
+        naan.name = "bar"
+        naan.fillColor = UIColor.black
+        naan.position = attackNode.position
+        
+        addChild(naan)
+        //TESTING END
+        
         name = "Player"
+    
     }
     
     override func SetInitPosition(screenSize: CGSize) {
@@ -69,7 +99,8 @@ class Player : GameObject{
         position = initPos
         
         //Scale up the player
-        scale(to: CGSize(width: 550, height: 750))
+        //scale(to: CGSize(width: 550, height: 750))
+
     }
     
     //Get Initial Touch Position
@@ -93,18 +124,26 @@ class Player : GameObject{
         if (myState == newState && myState != EState.Hurt){
             return
         }
-                
+        
+        lastState = myState
         myState = newState
         startIdleTimer()
        
         //Play New Animation based on state
         ChangeAnimation()
+        
+        
     }
     
     override func ChangeAnimation() {
         switch myState {
         case EState.Idle:
             PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
+        case EState.JabUP:
+           // PlayAnimation(animTextures: jabUpTextures, animFPS: 0.1)
+            StartAttack()
+        case EState.JabDOWN:
+            StartAttack()
         default:
             PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
 
@@ -132,6 +171,58 @@ class Player : GameObject{
     }
     
     //*** END TIMER FOR IDLE ***//
+    
+    //***TIMER FOR STARTING COLLIDER***
+    
+    // Start Timer to set to idle state
+    @IBAction func startAttackTimer() {
+        attackTimer.invalidate() // just in case this button is tapped multiple times
+        
+        // start the timer
+        attackTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(StartAttack), userInfo: nil, repeats: false)
+    }
+    
+    @objc func StartAttack() {
+        if (currentHealth > 0){
+            if (myState == EState.JabUP){
+                attackNode.position = CGPoint(x: attackXLocation, y: jabUpLocation)
+            }
+            else if (myState == EState.JabDOWN){
+                attackNode.position = CGPoint(x: attackXLocation, y: jabDownLocation)
+            }
+            //DEBUG
+            naan.position = attackNode.position
+        }
+        else{
+            attackTimer.invalidate()
+        }
+        
+        stopAttackTime()
+    }
+    
+    //*** END TIMER FOR STARTING COLLIDER ***//
+    //***TIMER FOR STOPPING COLLIDER***
+    
+    // Start Timer to set to idle state
+    @IBAction func stopAttackTime() {
+        stopAttackTimer.invalidate() // just in case this button is tapped multiple times
+        
+        // start the timer
+        stopAttackTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(StopAttack), userInfo: nil, repeats: false)
+    }
+    
+    @objc func StopAttack() {
+        if (currentHealth > 0){
+            attackNode.position = CGPoint(x: attackXLocation, y: nuetralLocation)
+            //DEBUG
+            naan.position = attackNode.position
+        }
+        else{
+            stopAttackTimer.invalidate()
+        }
+    }
+    
+    //*** END TIMER FOR STOPPING COLLIDER ***//
     
     //Calculate New State From Input
     func CalculateNewStateFromInput() -> EState{

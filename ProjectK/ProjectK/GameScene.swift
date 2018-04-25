@@ -105,5 +105,9 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             
             //Player gains score when contact is with attack box and ball
         }
+        else if contact.bodyA.node?.name == "attackBox" {
+            contact.bodyB.node?.isHidden = true
+            //player gains score
+        }
     }
 }

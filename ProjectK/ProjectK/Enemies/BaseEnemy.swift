@@ -27,6 +27,11 @@ class BaseEnemy : GameObject{
         physicsBody!.contactTestBitMask = physicsBody!.collisionBitMask
         
         name = "Enemy"
+        
+        isHidden = true
+        
+        //TEMP
+        //setScale(scale : 2.0)
     }
     
     func Update(){
