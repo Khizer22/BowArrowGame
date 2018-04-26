@@ -20,6 +20,9 @@
 		122B025420892930004894CD /* EnemyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B025320892930004894CD /* EnemyFactory.swift */; };
 		122B025720893A7B004894CD /* DebugUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122B025620893A7B004894CD /* DebugUI.swift */; };
 		127363452091259800062229 /* MyGameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127363442091259800062229 /* MyGameMode.swift */; };
+		12F0D3CA2092442500DF228B /* EnemyDead.sks in Resources */ = {isa = PBXBuildFile; fileRef = 12F0D3C92092442500DF228B /* EnemyDead.sks */; };
+		12F0D3CD2092449B00DF228B /* SceneKit Particle System.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 12F0D3CB2092449B00DF228B /* SceneKit Particle System.scnp */; };
+		12F0D3CE2092449B00DF228B /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 12F0D3CC2092449B00DF228B /* spark.png */; };
 		12FFA3072064545A00BFD178 /* BaseEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FFA3062064545A00BFD178 /* BaseEnemy.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +42,9 @@
 		122B025320892930004894CD /* EnemyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemyFactory.swift; sourceTree = "<group>"; };
 		122B025620893A7B004894CD /* DebugUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugUI.swift; sourceTree = "<group>"; };
 		127363442091259800062229 /* MyGameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGameMode.swift; sourceTree = "<group>"; };
+		12F0D3C92092442500DF228B /* EnemyDead.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EnemyDead.sks; sourceTree = "<group>"; };
+		12F0D3CB2092449B00DF228B /* SceneKit Particle System.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = "SceneKit Particle System.scnp"; sourceTree = "<group>"; };
+		12F0D3CC2092449B00DF228B /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		12FFA3062064545A00BFD178 /* BaseEnemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEnemy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +90,9 @@
 				120695D02061B32B008948B7 /* LaunchScreen.storyboard */,
 				120695D32061B32B008948B7 /* Info.plist */,
 				1229D36C208E9E710065EF22 /* MenuScene.swift */,
+				12F0D3C92092442500DF228B /* EnemyDead.sks */,
+				12F0D3CB2092449B00DF228B /* SceneKit Particle System.scnp */,
+				12F0D3CC2092449B00DF228B /* spark.png */,
 			);
 			path = ProjectK;
 			sourceTree = "<group>";
@@ -183,8 +192,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				120695CD2061B32B008948B7 /* Main.storyboard in Resources */,
+				12F0D3CE2092449B00DF228B /* spark.png in Resources */,
 				120695CF2061B32B008948B7 /* Assets.xcassets in Resources */,
 				120695D22061B32B008948B7 /* LaunchScreen.storyboard in Resources */,
+				12F0D3CD2092449B00DF228B /* SceneKit Particle System.scnp in Resources */,
+				12F0D3CA2092442500DF228B /* EnemyDead.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

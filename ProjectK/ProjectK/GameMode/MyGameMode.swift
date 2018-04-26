@@ -32,9 +32,9 @@ class GameMode : SKNode{
         
         healthText.fontName = "ChalkDuster"
         healthText.fontSize = 65
-        healthText.fontColor = SKColor.black
+        healthText.fontColor = SKColor.white
         healthText.position = CGPoint(x: 1200, y: 1000)
-        healthText.text = "Health: 5"
+        healthText.text = "Health: 10"
         
         addChild(healthText)
     }

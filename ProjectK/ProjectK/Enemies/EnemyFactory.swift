@@ -22,7 +22,7 @@ class EnemyFactory : SKNode{
     //Timer
     var timer = Timer()
     var spawndelayTimer = Timer()
-    var spawnDelay = 0.5
+    var spawnDelay = 0.7
     
     var screenSize = CGSize()
     var Enemies = [BaseEnemy]()

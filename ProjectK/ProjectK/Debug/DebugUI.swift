@@ -26,7 +26,7 @@ class DebugUI : SKLabelNode{
         fontName = "ChalkDuster"
         text = "You Win!"
         fontSize = 65
-        fontColor = SKColor.black
+        fontColor = SKColor.white
         position = CGPoint(x: 300, y: 1200)
         
       

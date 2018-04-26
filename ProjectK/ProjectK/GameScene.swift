@@ -14,9 +14,13 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     
     let player = Player()
     let enemyFactory = EnemyFactory()
-    let background = SKSpriteNode(imageNamed: "Background3")
+    let background = SKSpriteNode(imageNamed: "dark_background")
     
     var baseObjects = [GameObject]()
+    
+    //Particle
+    let emitter = SKEmitterNode(fileNamed: "EnemyDead.sks")
+    var particleTimer = Timer()
     
     //DEBUG
     var debugUI = DebugUI()
@@ -27,6 +31,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //Init background
         background.position = CGPoint(x: size.width / 2, y: size.height / 2 )
+        background.setScale(2)
+        background.xScale *= -1
         addChild(background)
         background.zPosition = -1
         
@@ -51,6 +57,16 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         //Physics
         physicsWorld.contactDelegate = self
+        
+        //Particle
+        emitter?.position = CGPoint(x: 0, y: -40)
+        emitter?.isHidden = true
+        emitter?.name = "hit"
+        
+        // Send the particles to the scene.
+        emitter?.targetNode = scene;
+        //emitter?.isHidden = true
+        scene!.addChild(emitter!)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -103,6 +119,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             if (contact.bodyB.node?.isHidden == false){
                 //add score if not hidden
                 gameMode.AddScore(amount: 1)
+                
+                //play particle
+                emitter?.position = (contact.bodyB.node?.position)!
+                emitter?.isHidden = false
+                //stop particle after a while
+                stopParticleTime()
             }
             //hide it
             contact.bodyB.node?.isHidden = true
@@ -111,4 +133,20 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             enemyFactory.IncreaseSpeedForAll()
         }
     }
+    
+    //***TIMER FOR STARTING PARTICLE***
+    
+    // Start Timer to set to idle state
+    @IBAction func stopParticleTime() {
+        particleTimer.invalidate()
+        
+        // start the timer
+        particleTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(StopParticle), userInfo: nil, repeats: false)
+    }
+    
+    @objc func StopParticle() {
+        emitter?.isHidden = true
+    }
+    
+    //*** END TIMER FOR STOPPING COLLIDER ***//
 }

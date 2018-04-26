@@ -18,12 +18,16 @@ class BaseEnemy : GameObject{
     //paramters
     var currentSpeed : CGFloat = -450
     
+    //AnimationTextures
+    var idleTextures = [SKTexture]()
+    var deadTextures = [SKTexture]()    
     
     init(){
-        super.init(imageName: "flyingDude_02")
+        super.init(imageName: "flyingDude_01")
         
         //Create circular Physics body
-        physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
+        //physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
+        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width,                                                                            height: size.height))
         //physicsBody?.isDynamic = false
         physicsBody?.allowsRotation = false
         physicsBody?.affectedByGravity = false
@@ -33,8 +37,10 @@ class BaseEnemy : GameObject{
         
         isHidden = true
         
-        //TEMP
-        //setScale(scale : 2.0)
+        PlayAnimation(animTextures: idleTextures, animFPS: 0.2)
+        
+        //fix direction
+        xScale = -xScale
     }
     
     func IncreaseSpeed(speedIncrease : CGFloat){
@@ -51,6 +57,20 @@ class BaseEnemy : GameObject{
         }
     }
 
+    override func InitAnimations() {
+        //IDLE
+        for index in 1 ... 4 {
+            let textureName = "flyingDude_0\(index)"
+            let texture = SKTexture(imageNamed: textureName)
+            idleTextures.append(texture)
+        }
+        //Dead
+        for index in 1 ... 4 {
+            let textureName = "flyingDude_0\(index)"
+            let texture = SKTexture(imageNamed: textureName)
+            deadTextures.append(texture)
+        }
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
     }
