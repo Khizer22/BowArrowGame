@@ -115,7 +115,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             
             //Player gains score when contact is with attack box and ball
         }
-        else if contact.bodyA.node?.name == "attackBox" {
+        if contact.bodyA.node?.name == "attackBox" {
             if (contact.bodyB.node?.isHidden == false){
                 //add score if not hidden
                 gameMode.AddScore(amount: 1)
