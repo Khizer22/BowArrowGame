@@ -31,14 +31,20 @@ class Projectile : GameObject{
     var endShootPos = CGPoint(x: 0, y: 0)
     
     init(){
-        super.init(imageName: "alienYellow", pos: CGPoint(x: 0,y: 0))
+        super.init(imageName: "alienYellow")
         
         //Create circular Physics body
         physicsBody = SKPhysicsBody(circleOfRadius: max(self.size.width/2,self.size.height/2))
-        SetInitPosition(newPos: CGPoint(x: size.width / 2, y: size.height / 2 ))
+        //SetInitPosition(newPos: CGPoint(x: size.width / 2, y: size.height / 2 ))
         
         //Arrow in dormant state
         ResetArrow()
+    }
+    
+    override func SetInitPosition(screenSize: CGSize) {
+        super.SetInitPosition(screenSize : CGSize())
+        initPos = CGPoint(x: screenSize.width/2, y: screenSize.height/2)
+        position = initPos
     }
     
     func Update(currentTime: TimeInterval){

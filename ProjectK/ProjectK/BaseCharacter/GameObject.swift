@@ -15,46 +15,32 @@ class GameObject : SKSpriteNode {
     var moveToTarget = CGPoint(x: 0, y: 0)
     var rotateToTarget = CGPoint (x:0, y: 0)
     var initPos = CGPoint(x: 0, y: 0)
-    var screenSize = CGPoint(x: 0, y: 0)
+    var screenSize = CGSize()
     
-    init(imageName : String, pos : CGPoint) {
+    var currentHealth : Int = 10
+    
+    init(imageName : String) {
         let texture = SKTexture(imageNamed : imageName)
         super.init(texture: texture, color: UIColor.clear, size: texture.size())
-        position = pos
-        self.SetTarget(newTarget: pos)
+        InitAnimations()
     }
-    
-    func MoveTo(){
-        
-        var moveToPos = CGPoint(x: position.x - moveToTarget.x, y: position.y - moveToTarget.y)
-        let length = sqrt(moveToPos.x * moveToPos.x + moveToPos.y * moveToPos.y)
-        moveToPos.x = moveToPos.x / length * moveSpeed
-        moveToPos.y = moveToPos.y / length * moveSpeed
-        
-        if (abs( position.x - moveToTarget.x) > moveSpeed + 1){
-            position = CGPoint(x: position.x - moveToPos.x,y: position.y - moveToPos.y)
-        }
-        
-    }
-    
-    func SetTarget(newTarget : CGPoint){
-        moveToTarget = newTarget
-    }
-    
-    func SetRotateTarget(newTarget : CGPoint){
-        rotateToTarget = newTarget
-        
-    }
-    
-    func SetInitPosition(newPos : CGPoint){
-        position = newPos
-        initPos = newPos
-    }
-    
-    func GetScreenSize(screenSize : CGPoint){
+
+    //Init position and get screen size for reference
+    func SetInitPosition(screenSize : CGSize){
         self.screenSize = screenSize
     }
     
+    //Init animations if object has them
+    func InitAnimations(){}
+    
+    func ChangeAnimation(){}
+    
+    func PlayAnimation(animTextures : [SKTexture], animFPS : TimeInterval){
+        let animate = SKAction.animate(with: animTextures,timePerFrame: animFPS,resize: true,restore: false)
+        let repeatAnimation = SKAction.repeatForever(animate)
+        run(repeatAnimation)
+    }
+   
     required init?(coder aDecoder: NSCoder) {
         fatalError("asdf")
     }

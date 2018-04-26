@@ -9,13 +9,21 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
-    let player = Player()
-    let arrow = Projectile()
-    let enemy = Enemy()
-    let background = SKSpriteNode(imageNamed: "background2")
+class GameScene: SKScene , SKPhysicsContactDelegate{
+    let gameMode = GameMode()
     
-    var baseObjects ? [GameObject()]
+    let player = Player()
+    let enemyFactory = EnemyFactory()
+    let background = SKSpriteNode(imageNamed: "dark_background")
+    
+    var baseObjects = [GameObject]()
+    
+    //Particle
+    let emitter = SKEmitterNode(fileNamed: "EnemyDead.sks")
+    var particleTimer = Timer()
+    
+    //DEBUG
+    var debugUI = DebugUI()
     
     override func didMove(to view: SKView) {
         //test background
@@ -23,26 +31,51 @@ class GameScene: SKScene {
         
         //Init background
         background.position = CGPoint(x: size.width / 2, y: size.height / 2 )
+        background.setScale(2)
+        background.xScale *= -1
         addChild(background)
         background.zPosition = -1
         
-        baseObjects = [player,arrow,enemy]
+        baseObjects = [player]
         
         //init all game objects
         for objects in baseObjects{
             addChild(objects)
-            objects.SetInitPosition(newPos: CGPoint(x: size.width / 2, y: size.height / 2 ))
+            objects.SetInitPosition(screenSize : size)
         }
+        
+        //EnemyFactory
+        addChild(enemyFactory)
+        enemyFactory.SetInitPosition(screenSize: size)
+        
+        //DEBUG
+        addChild(debugUI)
+        
+        //GameMode
+        addChild(gameMode)
+        gameMode.UpdateHealth(currentHP: player.currentHealth)
+        
+        //Physics
+        physicsWorld.contactDelegate = self
+        
+        //Particle
+        emitter?.position = CGPoint(x: 0, y: -40)
+        emitter?.isHidden = true
+        emitter?.name = "hit"
+        
+        // Send the particles to the scene.
+        emitter?.targetNode = scene;
+        //emitter?.isHidden = true
+        scene!.addChild(emitter!)
     }
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
-        arrow.Update(currentTime: currentTime)
+        enemyFactory.Update()
         
-        //enemy.SetTarget(newTarget: CGPoint(x:size.width,y: size.height/1.25))
-        enemy.Update()
-        
+        //DEBUG UI
+        debugUI.text = "State: " + player.myState.rawValue
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -50,12 +83,10 @@ class GameScene: SKScene {
         
         let touch: UITouch = touches.first as! UITouch
         
-        //player.SetTarget(newTarget: touch.location(in: self))  //set target for player to move to
-        player.SetRotateTarget(newTarget: touch.location(in: self))  //set target for rotation
-        player.RotateTowards() //rotate towards target
+        //Player Gather Input
+        player.GetInitialPosition(initPos: touch.location(in: self))
         
-        //Arrow
-        arrow.GetInitialPosition(initPos: touch.location(in: self))
+        
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -63,14 +94,59 @@ class GameScene: SKScene {
         
         let touch: UITouch = touches.first as! UITouch
         
-        //Arrow
-        arrow.GetFinalPosition(finalPos: touch.location(in: self))
+        //Player Gather Input End
+        player.GetFinalPosition(finalPos: touch.location(in: self))
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch: UITouch = touches.first as! UITouch
-        
-        player.SetRotateTarget(newTarget: touch.location(in: self))  //set target for rotation
-        player.RotateTowards() //rotate towards target
     }
+ 
+    func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyA.node?.name == "Player" {
+            NSLog("%@", "Hit Player")
+            contact.bodyB.node?.isHidden = true
+            
+            //Player loses hp
+            player.TakeDamage(damageAmount: 1)
+            gameMode.UpdateHealth(currentHP: player.currentHealth)
+            
+            //OR
+            
+            //Player gains score when contact is with attack box and ball
+        }
+        else if contact.bodyA.node?.name == "attackBox" {
+            if (contact.bodyB.node?.isHidden == false){
+                //add score if not hidden
+                gameMode.AddScore(amount: 1)
+                
+                //play particle
+                emitter?.position = (contact.bodyB.node?.position)!
+                emitter?.isHidden = false
+                //stop particle after a while
+                stopParticleTime()
+            }
+            //hide it
+            contact.bodyB.node?.isHidden = true
+            //update difficulty
+            enemyFactory.difficulty = gameMode.UpdateDifficulty()
+            enemyFactory.IncreaseSpeedForAll()
+        }
+    }
+    
+    //***TIMER FOR STARTING PARTICLE***
+    
+    // Start Timer to set to idle state
+    @IBAction func stopParticleTime() {
+        particleTimer.invalidate()
+        
+        // start the timer
+        particleTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(StopParticle), userInfo: nil, repeats: false)
+    }
+    
+    @objc func StopParticle() {
+        emitter?.isHidden = true
+    }
+    
+    //*** END TIMER FOR STOPPING COLLIDER ***//
 }
