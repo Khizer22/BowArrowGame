@@ -36,8 +36,7 @@ class GameObject : SKSpriteNode {
     func ChangeAnimation(){}
     
     func PlayAnimation(animTextures : [SKTexture], animFPS : TimeInterval){
-        let animate = SKAction.animate(with: animTextures,
-                                       timePerFrame: animFPS)
+        let animate = SKAction.animate(with: animTextures,timePerFrame: animFPS,resize: true,restore: false)
         let repeatAnimation = SKAction.repeatForever(animate)
         run(repeatAnimation)
     }

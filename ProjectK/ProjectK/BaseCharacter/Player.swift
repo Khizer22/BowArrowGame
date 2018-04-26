@@ -33,6 +33,7 @@ class Player : GameObject{
     var idleTextures = [SKTexture]()
     var jabUpTextures = [SKTexture]()
     var jabDownTextures = [SKTexture]()
+    var deathTextures = [SKTexture]()
     var longKickTextures = [SKTexture]()
     var jumpickTextures = [SKTexture]()
     //more later.....
@@ -60,7 +61,7 @@ class Player : GameObject{
     var naan = SKShapeNode(rectOf: CGSize(width: 350, height: 150))
     
     init(){
-        super.init(imageName: "Player")
+        super.init(imageName: "cat_02")
         
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width,                                                                            height: size.height))
         physicsBody?.pinned = true
@@ -88,6 +89,8 @@ class Player : GameObject{
         //TESTING END
         
         name = "Player"
+        
+        PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
     
     }
     
@@ -140,10 +143,16 @@ class Player : GameObject{
         case EState.Idle:
             PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
         case EState.JabUP:
-           // PlayAnimation(animTextures: jabUpTextures, animFPS: 0.1)
+            PlayAnimation(animTextures: jabUpTextures, animFPS: 0.05)
             StartAttack()
         case EState.JabDOWN:
+            PlayAnimation(animTextures: jabDownTextures, animFPS: 0.05)
             StartAttack()
+        case EState.Dead:
+            //PlayAnimation(animTextures: deathTextures, animFPS: 0.5)
+            let animate = SKAction.animate(with: deathTextures,
+                                           timePerFrame: 0.5,resize: true,restore: false)
+            run(animate)
         default:
             PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
 
@@ -269,12 +278,12 @@ class Player : GameObject{
             //Check what part of screen is tapped
             if (endTouchPos.y >= screenSize.height/2){
                 newState = EState.JabUP
-                backToIdleTime = 0.1
+                backToIdleTime = 0.3
                 NSLog("%@", "JAB-UP")
             }
             else if (endTouchPos.y < screenSize.height/2){
                 newState = EState.JabDOWN
-                backToIdleTime = 0.1
+                backToIdleTime = 0.3
                 NSLog("%@", "JAB-DOWN")
             }
             
@@ -286,21 +295,27 @@ class Player : GameObject{
     override func InitAnimations() {
         //IDLE
         for index in 1 ... 4 {
-            let textureName = "idle\(index)"
+            let textureName = "cat_0\(index)"
             let texture = SKTexture(imageNamed: textureName)
             idleTextures.append(texture)
         }
         //JabUp
-        for index in 1 ... 4 {
-            let textureName = "idle\(index)"
+        for index in 47 ... 52 {
+            let textureName = "cat_\(index)"
             let texture = SKTexture(imageNamed: textureName)
-            idleTextures.append(texture)
+            jabUpTextures.append(texture)
         }
         //JabLow
-        for index in 1 ... 4 {
-            let textureName = "idle\(index)"
+        for index in 13 ... 20 {
+            let textureName = "cat_\(index)"
             let texture = SKTexture(imageNamed: textureName)
-            idleTextures.append(texture)
+            jabDownTextures.append(texture)
+        }
+        //Death
+        for index in 31 ... 39{
+            let textureName = "cat_\(index)"
+            let texture = SKTexture(imageNamed: textureName)
+            deathTextures.append(texture)
         }
 
     }

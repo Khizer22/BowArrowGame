@@ -22,13 +22,14 @@ class EnemyFactory : SKNode{
     //Timer
     var timer = Timer()
     var spawndelayTimer = Timer()
-    var spawnDelay = 0.3
+    var spawnDelay = 0.5
     
     var screenSize = CGSize()
     var Enemies = [BaseEnemy]()
     
     //difficutly
     var difficulty : Int = 0
+    var oldDifficulty : Int = 0
     
     override init(){
         super.init()
@@ -89,20 +90,24 @@ class EnemyFactory : SKNode{
         for enemies in Enemies{
             if (enemies.inUse == false){
                 enemies.isHidden = false
-                enemies.position = CGPoint(x: screenSize.width,y: 0)
+                
+                var i = arc4random() % 2;
+                var q : Int = Int(i)
+                
+                enemies.position = CGPoint(x: screenSize.width,y: CGFloat(-350 * q))
                 enemies.inUse = true
                 
                 //Spawning system
-                sendAmount -= 1
+                //sendAmount -= 1
                 
                 break
             }
         }
         
-        if (sendAmount <= 0){
-            timer.invalidate()
-            setCanSend()
-        }
+        //if (sendAmount <= 0){
+          //  timer.invalidate()
+          //  setCanSend()
+       //}
     }
     
     //TIMER TO START SPAWNER
@@ -117,6 +122,37 @@ class EnemyFactory : SKNode{
     //Change back to idle State
     @objc func SetCanSendTrue() {
         canSend = true
+    }
+    
+    func IncreaseSpeedForAll(){
+        var newSpeedInc : CGFloat = 0
+        
+        if (oldDifficulty == difficulty){
+            return
+        }else{
+            oldDifficulty = difficulty
+        }
+        
+        if (difficulty == 0){
+            newSpeedInc = 50
+        }
+        else if (difficulty == 1){
+            newSpeedInc = 100
+        }
+        else if (difficulty == 2){
+            newSpeedInc = 120
+        }
+        else if (difficulty == 3){
+            newSpeedInc = 150
+        }
+        else if (difficulty == 4){
+            newSpeedInc = 200
+        }
+        
+        for enemies in Enemies{
+            enemies.IncreaseSpeed(speedIncrease: newSpeedInc)
+        }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -108,6 +108,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             contact.bodyB.node?.isHidden = true
             //update difficulty
             enemyFactory.difficulty = gameMode.UpdateDifficulty()
+            enemyFactory.IncreaseSpeedForAll()
         }
     }
 }
