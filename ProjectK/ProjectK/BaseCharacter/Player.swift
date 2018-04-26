@@ -144,10 +144,10 @@ class Player : GameObject{
             PlayAnimation(animTextures: idleTextures, animFPS: 0.1)
         case EState.JabUP:
             PlayAnimation(animTextures: jabUpTextures, animFPS: 0.05)
-            StartAttack()
+            startAttackTimer()
         case EState.JabDOWN:
             PlayAnimation(animTextures: jabDownTextures, animFPS: 0.05)
-            StartAttack()
+            startAttackTimer()
         case EState.Dead:
             //PlayAnimation(animTextures: deathTextures, animFPS: 0.5)
             let animate = SKAction.animate(with: deathTextures,
@@ -188,7 +188,7 @@ class Player : GameObject{
         attackTimer.invalidate() // just in case this button is tapped multiple times
         
         // start the timer
-        attackTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(StartAttack), userInfo: nil, repeats: false)
+        attackTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(StartAttack), userInfo: nil, repeats: false)
     }
     
     @objc func StartAttack() {
