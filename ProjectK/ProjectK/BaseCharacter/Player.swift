@@ -85,7 +85,7 @@ class Player : GameObject{
         naan.fillColor = UIColor.black
         naan.position = attackNode.position
         
-        addChild(naan)
+        //addChild(naan)
         //TESTING END
         
         name = "Player"

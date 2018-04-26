@@ -24,7 +24,7 @@ class GameMode : SKNode{
         
         scoreText.fontName = "ChalkDuster"
         scoreText.fontSize = 65
-        scoreText.fontColor = SKColor.black
+        scoreText.fontColor = SKColor.white
         scoreText.position = CGPoint(x: 1200, y: 1200)
         scoreText.text = "Score: 0"
         
